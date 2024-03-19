@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>設計書サンプル</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        /* ファイル選択 */
+
+        /* http://cccabinet.jpn.org/bootstrap4/javascript/forms/file-browser */
+
+        .custom-file-input:lang(ja)~.custom-file-label::after {
+            content: "参照";
+        }
+
+        .custom-file {
+            overflow: hidden;
+        }
+
+        .custom-file-label {
+            white-space: nowrap;
+        }
+        #result {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2>設計書解析テスト</h2>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile">
+            <label class="custom-file-label" for="customFile">Excelファイルを選択...</label>
+        </div>
+        <div>
+            <h3>結果</h3>
+            <div id="result">
+            <div>
+                <h4 id="title1"></h4>
+                <div id="resultNew1"></div>
+            </div>
+            <div>
+                <h4 id="title2"></h4>
+                <div id="resultNew2"></div>
+            </div>
+            <div>
+                <h4 id="title3"></h4>
+                <div id="resultNew3"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/xlsx.full.min.js"></script>
+    <script>
+        var X = XLSX;
+
+        // ファイル選択時のメイン処理
+        function handleFile(e) {
+
+            var files = e.target.files;
+            var f = files[0];
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var wb;
+                var arr = fixdata(data);
+                wb = X.read(btoa(arr), {
+                    type: 'base64',
+                    cellDates: true,
+                });
+
+                var output = "";
+                output = to_json2(wb);
+                // console.log(output[0][0]["画面項目説明"]);
+      document.getElementById("title1").textContent = (output[0][0]["画面項目説明"]);
+                // $("pre#result").html(JSON.stringify(output[0], null, 2));
+      document.getElementById("title2").textContent = (output[1][0]["画面項目説明"]);
+                // $("pre#result2").html(JSON.stringify(output[1], null, 2));
+      document.getElementById("title3").textContent = (output[2][0]["画面項目説明"]);
+                // $("pre#result3").html(JSON.stringify(output[2], null, 2));
+
+
+                let exArr1 = []
+                output[0].map((val, key)=> {
+                    let eobj = {
+                        title: val["__EMPTY"],
+                        en: val["__EMPTY_15"],
+                    }
+                    exArr1.push(eobj)
+                })
+                // console.log(exArr)
+                // $("pre#result").html(JSON.stringify(exArr1, null, 2));
+                    let result1 = ""
+                exArr1.forEach((val, key)=>{
+                    result1 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                })
+                    document.getElementById("resultNew1").innerHTML = result1
+
+                let exArr2 = []
+                output[1].map((val, key)=> {
+                    let eobj = {
+                        title: val["__EMPTY"],
+                        en: val["__EMPTY_15"],
+                    }
+                    exArr2.push(eobj)
+                })
+                // console.log(exArr)
+                // $("pre#result2").html(JSON.stringify(exArr2, null, 2));
+                    let result2 = ""
+                exArr2.forEach((val, key)=>{
+                    result2 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                })
+                    document.getElementById("resultNew2").innerHTML = result2
+
+                let exArr3 = []
+                output[2].map((val, key)=> {
+                    let eobj = {
+                        title: val["__EMPTY"],
+                        en: val["__EMPTY_15"],
+                    }
+                    exArr3.push(eobj)
+                })
+                // console.log(exArr)
+                // $("pre#result3").html(JSON.stringify(exArr3, null, 2));
+
+                    let result3 = ""
+                exArr3.forEach((val, key)=>{
+                    result3 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                })
+                    document.getElementById("resultNew3").innerHTML = result3
+
+
+            };
+
+            reader.readAsArrayBuffer(f);
+        }
+
+        // ファイルの読み込み
+        function fixdata(data) {
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w,
+                l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        // ワークブックのデータをjsonに変換
+        function to_json(workbook) {
+            var result = {};
+            var objArray = []
+            workbook.SheetNames.forEach(function (sheetName) {
+                var roa = X.utils.sheet_to_json(
+                    workbook.Sheets[sheetName],
+                    {
+                        raw: true,
+                    });
+                if (roa.length > 0) {
+                    result[sheetName] = roa;
+                }
+            });
+            return result;
+        }
+
+        function to_json2(workbook) {
+            let sheet_name = "画面項目説明"
+            var result = {};
+                var roa = X.utils.sheet_to_json(
+                    workbook.Sheets[sheet_name],
+                    {
+                        raw: true,
+                    });
+                // console.log("Test")
+                    // console.log(roa)
+                if (roa.length > 0) {
+                    result[sheet_name] = roa;
+                    objArray = []
+                    let pushObj = {}
+                    let rangeArr = []
+                    let objNo = 0
+                    roa.forEach(function(val, key) {
+                        objNo++
+                        let regexp = /^▼/
+                        if(regexp.test(val["画面項目説明"])){
+                            rangeArr.push(key)
+                            console.log(rangeArr)
+                            console.log(rangeArr.length)
+                            if(rangeArr.length === 2) {
+                                console.log(rangeArr[0] + ":" + rangeArr[1])
+                                let createArr = roa.slice(rangeArr[0], rangeArr[1])
+                                pushObj["arr" + objNo] = createArr
+                                console.log(pushObj["arr" + objNo])
+                                objArray.push(createArr)
+                                rangeArr.shift()
+                            }
+
+                        }
+                    })
+                    console.log(objArray)
+                }
+            // return result;
+            return objArray;
+        }
+
+        // 画面初期化
+        $(document).ready(function () {
+
+            // ファイル選択欄 選択イベント
+            // http://cccabinet.jpn.org/bootstrap4/javascript/forms/file-browser
+            $('.custom-file-input').on('change', function (e) {
+                handleFile(e);
+                $(this).next('.custom-file-label').html($(this)[0].files[0].name);
+            })
+        });
+
+    </script>
+</body>
+
+</html>
