@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>設計書サンプル</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* ファイル選択 */
-
-        /* http://cccabinet.jpn.org/bootstrap4/javascript/forms/file-browser */
+        body {
+            padding: 1rem;
+        }
 
         .custom-file-input:lang(ja)~.custom-file-label::after {
             content: "参照";
@@ -24,39 +23,148 @@
         .custom-file-label {
             white-space: nowrap;
         }
+
         #result {
             display: flex;
+        }
+
+        h5 {
+            color: crimson;
+        }
+
+        .card-header-title {
+            line-height: 0.5;
+        }
+
+        .columns.is-vcentered {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        li p,
+        li h5 {
+            margin-bottom: 0 !important;
+            line-height: 1.0 !important;
         }
     </style>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <h2>設計書解析テスト</h2>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
-            <label class="custom-file-label" for="customFile">Excelファイルを選択...</label>
-        </div>
-        <div>
-            <h3>結果</h3>
-            <div id="result">
-            <div>
-                <h4 id="title1"></h4>
-                <div id="resultNew1"></div>
-            </div>
-            <div>
-                <h4 id="title2"></h4>
-                <div id="resultNew2"></div>
-            </div>
-            <div>
-                <h4 id="title3"></h4>
-                <div id="resultNew3"></div>
-            </div>
+    <h2 class="content">設計書解析テスト</h2>
+    <div class="content">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title is-centered">
+                    Excelファイルを選択
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <form class="box">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input custom-file-input" id="customFile" type="file"
+                                    placeholder="Excelファイルを選択...">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+
+    <section class="content" style="width: 80%;">
+
+        <div class="card" style="position: static;">
+            <div class="card-header" style="background-color: darkturquoise;">
+                <p class="card-header-title is-centered" style="background-color: transparent;">
+                    Palette
+                </p>
+            </div>
+            <div class="card-content" style="padding: 30px;">
+                <div class="columns" style="border: solid 1px #bdbdbd;">
+                    <div class="column is-one-fifth"
+                        style="height: 24vh; background-color: #e0e0e0; display: flex; align-items: center;">
+                        <label class="label" style="display: flex; align-items: center;">Label</label>
+                    </div>
+                    <div class="column">
+                        <div class="content select">
+                            <select>
+                                <option>選択初期値</option>
+                                <option>選択リスト1</option>
+                                <option>選択リスト2</option>
+                            </select>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                            <div class="column">
+                                <input class="input" type="text" placeholder="Text input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <div class="content">
+        <h3>結果</h3>
+        <div id="result">
+            <div>
+                <h4 id="title1"></h4>
+                <ul id="resultNew1"></ul>
+            </div>
+            <div>
+                <h4 id="title2"></h4>
+                <ul id="resultNew2"></ul>
+            </div>
+            <div>
+                <h4 id="title3"></h4>
+                <ul id="resultNew3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.11.19/xlsx.full.min.js"></script>
     <script>
@@ -81,62 +189,69 @@
                 var output = "";
                 output = to_json2(wb);
                 // console.log(output[0][0]["画面項目説明"]);
-      document.getElementById("title1").textContent = (output[0][0]["画面項目説明"]);
+                document.getElementById("title1").textContent = (output[0][0]["画面項目説明"]);
                 // $("pre#result").html(JSON.stringify(output[0], null, 2));
-      document.getElementById("title2").textContent = (output[1][0]["画面項目説明"]);
+                document.getElementById("title2").textContent = (output[1][0]["画面項目説明"]);
                 // $("pre#result2").html(JSON.stringify(output[1], null, 2));
-      document.getElementById("title3").textContent = (output[2][0]["画面項目説明"]);
+                document.getElementById("title3").textContent = (output[2][0]["画面項目説明"]);
                 // $("pre#result3").html(JSON.stringify(output[2], null, 2));
 
+                console.log(output[2])
 
                 let exArr1 = []
-                output[0].map((val, key)=> {
+                output[0].map((val, key) => {
                     let eobj = {
                         title: val["__EMPTY"],
                         en: val["__EMPTY_15"],
+                        inout: val["__EMPTY_20"],
+                        pre: val["__EMPTY_23"],
                     }
                     exArr1.push(eobj)
                 })
                 // console.log(exArr)
                 // $("pre#result").html(JSON.stringify(exArr1, null, 2));
-                    let result1 = ""
-                exArr1.forEach((val, key)=>{
-                    result1 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                let result1 = ""
+                exArr1.forEach((val, key) => {
+                    result1 += "<li><h5>" + val.title + "</h5><p>" + val.en + "</p><p>" + val.inout + "</p><p>" + val.pre + "</p><hr></li>"
                 })
-                    document.getElementById("resultNew1").innerHTML = result1
+                document.getElementById("resultNew1").innerHTML = result1
 
                 let exArr2 = []
-                output[1].map((val, key)=> {
+                output[1].map((val, key) => {
                     let eobj = {
                         title: val["__EMPTY"],
                         en: val["__EMPTY_15"],
+                        inout: val["__EMPTY_20"],
+                        pre: val["__EMPTY_23"],
                     }
                     exArr2.push(eobj)
                 })
                 // console.log(exArr)
                 // $("pre#result2").html(JSON.stringify(exArr2, null, 2));
-                    let result2 = ""
-                exArr2.forEach((val, key)=>{
-                    result2 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                let result2 = ""
+                exArr2.forEach((val, key) => {
+                    result2 += "<li><h5>" + val.title + "</h5><p>" + val.en + "</p><p>" + val.inout + "</p><p>" + val.pre + "</p><hr></li>"
                 })
-                    document.getElementById("resultNew2").innerHTML = result2
+                document.getElementById("resultNew2").innerHTML = result2
 
                 let exArr3 = []
-                output[2].map((val, key)=> {
+                output[2].map((val, key) => {
                     let eobj = {
                         title: val["__EMPTY"],
                         en: val["__EMPTY_15"],
+                        inout: val["__EMPTY_20"],
+                        pre: val["__EMPTY_23"],
                     }
                     exArr3.push(eobj)
                 })
                 // console.log(exArr)
                 // $("pre#result3").html(JSON.stringify(exArr3, null, 2));
 
-                    let result3 = ""
-                exArr3.forEach((val, key)=>{
-                    result3 += "<h5>"+ val.title +"</h5><p>"+ val.en +"</p><hr>"
+                let result3 = ""
+                exArr3.forEach((val, key) => {
+                    result3 += "<li><h5>" + val.title + "</h5><p>" + val.en + "</p><p>" + val.inout + "</p><p>" + val.pre + "</p><hr></li>"
                 })
-                    document.getElementById("resultNew3").innerHTML = result3
+                document.getElementById("resultNew3").innerHTML = result3
 
 
             };
@@ -175,39 +290,39 @@
         function to_json2(workbook) {
             let sheet_name = "画面項目説明"
             var result = {};
-                var roa = X.utils.sheet_to_json(
-                    workbook.Sheets[sheet_name],
-                    {
-                        raw: true,
-                    });
-                // console.log("Test")
-                    // console.log(roa)
-                if (roa.length > 0) {
-                    result[sheet_name] = roa;
-                    objArray = []
-                    let pushObj = {}
-                    let rangeArr = []
-                    let objNo = 0
-                    roa.forEach(function(val, key) {
-                        objNo++
-                        let regexp = /^▼/
-                        if(regexp.test(val["画面項目説明"])){
-                            rangeArr.push(key)
-                            console.log(rangeArr)
-                            console.log(rangeArr.length)
-                            if(rangeArr.length === 2) {
-                                console.log(rangeArr[0] + ":" + rangeArr[1])
-                                let createArr = roa.slice(rangeArr[0], rangeArr[1])
-                                pushObj["arr" + objNo] = createArr
-                                console.log(pushObj["arr" + objNo])
-                                objArray.push(createArr)
-                                rangeArr.shift()
-                            }
-
+            var roa = X.utils.sheet_to_json(
+                workbook.Sheets[sheet_name],
+                {
+                    raw: true,
+                });
+            // console.log("Test")
+            // console.log(roa)
+            if (roa.length > 0) {
+                result[sheet_name] = roa;
+                objArray = []
+                let pushObj = {}
+                let rangeArr = []
+                let objNo = 0
+                roa.forEach(function (val, key) {
+                    objNo++
+                    let regexp = /^▼/
+                    if (regexp.test(val["画面項目説明"])) {
+                        rangeArr.push(key)
+                        console.log(rangeArr)
+                        console.log(rangeArr.length)
+                        if (rangeArr.length === 2) {
+                            console.log(rangeArr[0] + ":" + rangeArr[1])
+                            let createArr = roa.slice(rangeArr[0], rangeArr[1])
+                            pushObj["arr" + objNo] = createArr
+                            console.log(pushObj["arr" + objNo])
+                            objArray.push(createArr)
+                            rangeArr.shift()
                         }
-                    })
-                    console.log(objArray)
-                }
+
+                    }
+                })
+                console.log(objArray)
+            }
             // return result;
             return objArray;
         }
